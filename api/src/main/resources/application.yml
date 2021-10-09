@@ -1,0 +1,42 @@
+server:
+  error:
+    include-binding-errors: always
+    include-message: always
+    include-stacktrace: never
+
+ecosystem:
+  rabbit:
+    hostname: localhost
+    virtual_host: /demo
+    port: 5672
+    username: guest
+    password: guest
+  queue:
+    example_queue: queue_name
+    example_dlq: example_dlq
+    example_ex: example_exchange
+
+spring:
+  rabbitmq:
+    listener:
+      simple:
+        concurrency: 2
+        max-concurrency: 5
+        retry:
+          enabled: true
+          initial-interval: 3s
+          max-attempts: 6
+          max-interval: 10s
+          multiplier: 2
+  jpa:
+    database: POSTGRESQL
+    show-sql: false
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/demo
+    username: postgres
+    password: postgres
+  database:
+    driverClassName: org.postgresql.Driver
